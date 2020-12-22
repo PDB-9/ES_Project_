@@ -1,0 +1,35 @@
+.DS_Store
+node_modules
+/dist
+env
+/env
+venv
+/venv
+/dataset/data.json
+/dataset/data_curl.json
+/logs
+/staticfiles
+# local env files
+
+.idea
+/.idea
+/idea
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+/ES_Project/__pycache__
+/spotify/__pycache__
+/spotify/migrations/__pycache__
