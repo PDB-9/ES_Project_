@@ -6,10 +6,12 @@ from elasticsearch import Elasticsearch, helpers
 from dotenv import load_dotenv
 import os
 load_dotenv()
-if os.environ.get('ES') is None:
-    ELASTICSEARCH_HOST= "localhost:9200"
+if os.environ.get('ES01') is None:
+    ES01= "localhost:9200"
 else:
-    ELASTICSEARCH_HOST = os.environ.get('ES')
+    ES01= os.environ.get('ES01')
+    ES02= os.environ.get('ES02')
+    ES03= os.environ.get('ES03')
 
 df = pd.read_csv (r'data.csv')
 if(df.isnull().sum().sum() !=0):
@@ -42,7 +44,7 @@ else:
             jsonfile.write('\n')
 
     # # Init ES
-    es= Elasticsearch([ELASTICSEARCH_HOST])
+    es= Elasticsearch([ES01,ES02,ES03])
     # es = Elasticsearch(['https://fcpai8781z:rpb78t2zu0@jasmine-450285335.us-east-1.bonsaisearch.net:443'])
     setup= {
         "settings":{

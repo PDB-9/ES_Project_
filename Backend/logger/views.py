@@ -18,7 +18,7 @@ class LogViewSet(viewsets.ViewSet):
     def get(self, request):
         # Define a default Elasticsearch client
         # client = connections.create_connection(hosts=['http://localhost:9200'])
-        client = connections.create_connection(hosts=[conf_settings.ELASTICSEARCH_HOST])
+        client = connections.create_connection(hosts=[conf_settings.ES01,conf_settings.ES02,conf_settings.ES03])
         s = Search(using=client, index="log-app")
         a = A('terms', field='message.request.data.search.keyword')
         s.aggs.bucket('search', a)

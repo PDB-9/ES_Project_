@@ -18,10 +18,12 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-if os.environ.get('ES') is None:
-    ELASTICSEARCH_HOST= "localhost:9200"
+if os.environ.get('ES01') is None:
+    ES01= "localhost:9200"
 else:
-    ELASTICSEARCH_HOST = os.environ.get('ES')
+    ES01= os.environ.get('ES01')
+    ES02= os.environ.get('ES02')
+    ES03= os.environ.get('ES03')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -69,7 +71,7 @@ MIDDLEWARE = [
 
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': ELASTICSEARCH_HOST
+        'hosts': [ES01,ES02,ES03]
         # 'hosts': 'localhost:9200'
     },
 }
@@ -212,7 +214,7 @@ STATIC_URL = '/static/'
 DJANGO_LOGGING = {
     "CONSOLE_LOG": False,
     "LOG_PATH": '{}/logs'.format(STATIC_ROOT),
-    "ELASTICSEARCH_HOSTS":[ELASTICSEARCH_HOST],
+    "ELASTICSEARCH_HOSTS":(ES01,ES02,ES03),
     "ELASTICSEARCH_ENABLED" : True,
     # "ELASTICSEARCH_ENABLED" : False,
     "ELASTICSEARCH_INDEX": "log-app",
