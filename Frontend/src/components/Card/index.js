@@ -5,9 +5,23 @@ import { setPlaylist } from "../../actions/globalActions";
 import { getPlaylist } from "../../selectors/global";
 import { USER_PLAYLIST } from "../../constants/globalConstants";
 import { Button } from "../index";
-import { StyledCard, TitleTopWrapper, DetailWrapper, ExplicitWrapper } from "./style";
+import { StyledCard, TitleTopWrapper, DetailWrapper, ChipWrapper } from "./style";
 
-const Card = ({ id, title, artists, year, duration, explicit }) => {
+const Card = ({
+  id,
+  title,
+  artists,
+  year,
+  duration,
+  explicit,
+  acousticness,
+  danceability,
+  energy,
+  instrumentalness,
+  valence,
+  liveness,
+  release_date,
+}) => {
   const playlist = useSelector((state) => getPlaylist(state));
   const dispatch = useDispatch();
 
@@ -43,12 +57,45 @@ const Card = ({ id, title, artists, year, duration, explicit }) => {
       </p>
       <DetailWrapper>
         {year} • {millisToMinutesAndSeconds(duration)}{" "}
-        {explicit.includes("1") ? (
+        {explicit.includes("1") && (
           <>
-            • <ExplicitWrapper>Explicit</ExplicitWrapper>
+            • <ChipWrapper color={"red"}>Explicit</ChipWrapper>
           </>
-        ) : (
-          <div />
+        )}
+        {acousticness >= 0.5 && (
+          <>
+            • <ChipWrapper color={"brown"}>Acoustic</ChipWrapper>
+          </>
+        )}
+        {danceability >= 0.5 && (
+          <>
+            • <ChipWrapper color={"purple"}>Danceable</ChipWrapper>
+          </>
+        )}
+        {energy >= 0.5 && (
+          <>
+            • <ChipWrapper color={"hotpink"}>Energetic</ChipWrapper>
+          </>
+        )}
+        {instrumentalness >= 0.5 && (
+          <>
+            • <ChipWrapper color={"blue"}>Instrumental</ChipWrapper>
+          </>
+        )}
+        {valence >= 0.5 && (
+          <>
+            • <ChipWrapper color={"green"}>Happy</ChipWrapper>
+          </>
+        )}
+        {valence < 0.5 && (
+          <>
+            • <ChipWrapper color={"gray"}>Sad</ChipWrapper>
+          </>
+        )}
+        {liveness > 0.8 && (
+          <>
+            • <ChipWrapper color={"orange"}>Live</ChipWrapper>
+          </>
         )}
       </DetailWrapper>
       <iframe
@@ -60,6 +107,7 @@ const Card = ({ id, title, artists, year, duration, explicit }) => {
         allowtransparency="true"
         allow="encrypted-media"
       ></iframe>
+      <div className="date">Date of release: {release_date}</div>
     </StyledCard>
   );
 };
