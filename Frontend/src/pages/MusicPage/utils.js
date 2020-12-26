@@ -1,11 +1,19 @@
 import axios from "axios";
 import { setIsLoading } from "../../actions/globalActions";
 
-const base_url = process.env.REACT_APP_API_KEY +'/spotify/';
+const base_url = "https://api-spotipy.herokuapp.com/spotify/";
 
 const filterMapping = {
   title: "name",
   artist: "artists",
+};
+
+export const initialSeachData = {
+  count: 0,
+  next: null,
+  previous: null,
+  facets: {},
+  results: [],
 };
 
 export const fetchMusic = async (
@@ -85,16 +93,20 @@ export const fetchMusic = async (
   } catch (err) {
     dispatch(setIsLoading(false));
     console.log(err);
+
+    return initialSeachData;
   }
 };
 
 export const fetchTopSearch = async () => {
   try {
-    const response = await axios.get(process.env.REACT_APP_API_KEY +'/log/get/');
+    const response = await axios.get("https://api-spotipy.herokuapp.com/log/get/");
     const data = response.data.search;
 
     return data;
   } catch (err) {
     console.log(err);
+
+    return [];
   }
 };
